@@ -21,6 +21,7 @@ public class MainApp extends JFrame implements ActionListener{
 	 */
 	public static void main(String[] args) {
 		MainApp frame = new MainApp();
+		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 

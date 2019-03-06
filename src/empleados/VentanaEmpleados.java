@@ -26,8 +26,10 @@ public class VentanaEmpleados extends JDialog {
 	 * Create the frame.
 	 */
 	public VentanaEmpleados() {
+		
 		setBounds(100, 100, 500, 350);
 		panelPrincipal = new JPanel();
+		setResizable(false);
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelPrincipal);
 		panelPrincipal.setLayout(new GridLayout(0, 1, 0, 0));
@@ -51,6 +53,4 @@ public class VentanaEmpleados extends JDialog {
 		setModal(true);
 		
 	}
-	
-	
 }

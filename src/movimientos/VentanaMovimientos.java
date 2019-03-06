@@ -22,6 +22,7 @@ public class VentanaMovimientos extends JDialog {
 	 */
 	public VentanaMovimientos() {
 		setBounds(100, 100, 500, 350);
+		setResizable(false);
 		panelPrincipal = new JPanel();
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelPrincipal);
