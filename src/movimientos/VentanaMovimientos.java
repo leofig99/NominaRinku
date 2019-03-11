@@ -1,16 +1,7 @@
 package movimientos;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import empleados.PanelBuscar;
-import empleados.PanelEliminar;
-import empleados.PanelModificar;
 
 import javax.swing.JTabbedPane;
 

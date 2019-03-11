@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -35,6 +37,16 @@ public class PanelNuevo extends JPanel implements ActionListener {
 		
 		txtNumero = new JTextField(8);
 		txtNumero.setBounds(85, 11, 86, 20);
+		
+		txtNumero.addKeyListener(new KeyAdapter() {
+	        @Override
+	        public void keyTyped(KeyEvent e) {
+	            char c = e.getKeyChar();
+	            if (!Character.isDigit(c)||txtNumero.getText().length()==8) {
+	                e.consume();
+	            }
+	        }
+	    });
 		add(txtNumero);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
@@ -43,8 +55,16 @@ public class PanelNuevo extends JPanel implements ActionListener {
 		
 		txtNombre = new JTextField(20);
 		txtNombre.setBounds(85, 36, 86, 20);
+		txtNombre.addKeyListener(new KeyAdapter() {
+	        @Override
+	        public void keyTyped(KeyEvent e) {
+	            char c = e.getKeyChar();
+	            if (Character.isDigit(c)||txtNombre.getText().length()==18) {
+	                e.consume();
+	            }
+	        }
+	    });
 		add(txtNombre);
-		txtNombre.setColumns(10);
 		
 		lblApellido = new JLabel("Apellido:");
 		lblApellido.setBounds(210, 39, 65, 14);
@@ -52,6 +72,15 @@ public class PanelNuevo extends JPanel implements ActionListener {
 		
 		txtApellido = new JTextField(20);
 		txtApellido.setBounds(285, 36, 86, 20);
+		txtApellido.addKeyListener(new KeyAdapter() {
+	        @Override
+	        public void keyTyped(KeyEvent e) {
+	            char c = e.getKeyChar();
+	            if (Character.isDigit(c)||txtApellido.getText().length()==18) {
+	                e.consume();
+	            }
+	        }
+	    });
 		add(txtApellido);
 		
 		JPanel panelRol = new JPanel();
@@ -107,12 +136,13 @@ public class PanelNuevo extends JPanel implements ActionListener {
 		ButtonGroup  grpTipo = new ButtonGroup();
 		grpTipo.add(rbInterno);
 		grpTipo.add(rbExterno);
-		
 	}
 
 public void NuevoEmpleado() {
 	Statement statement;
-	
+	if(txtNumero.getText().isEmpty()||txtNombre.getText().isEmpty()) {
+		JOptionPane.showMessageDialog(null,"Favor de llenar todos los campos.", "ERROR",JOptionPane.INFORMATION_MESSAGE);
+	}else {
 	if(rbChofer.isSelected()) {
 		sRol="Chofer";
 	}else if(rbCargador.isSelected()) {
@@ -126,19 +156,19 @@ public void NuevoEmpleado() {
 	}else {
 		sTipo="Externo";
 	}
-	
 	try {
 		statement = con.getConnection().createStatement();
-		String sql="insert into empleadosrinku values ("+txtNumero.getText().trim()+",'"+txtNombre.getText().trim()+"','"+txtApellido.getText().trim()+"','"+sRol+"','"+sTipo+"')";
-		//JOptionPane.showMessageDialog(null, sql);
+		String sql="INSERT INTO empleadosrinku VALUES ("+txtNumero.getText().trim()+",'"+txtNombre.getText().trim()+"','"+txtApellido.getText().trim()+"','"+sRol+"','"+sTipo+"')";
 		statement.executeUpdate(sql);
+		JOptionPane.showMessageDialog(null,"Empleado guardado correctamente!.", "Exito",JOptionPane.INFORMATION_MESSAGE);
+
 	} catch (SQLException e) {
-		
-		
-		
+		JOptionPane.showMessageDialog(null,"Hubo un error al guardar el empleado.", "ERROR",JOptionPane.ERROR_MESSAGE);
+		e.printStackTrace();
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
+}
 }
 
 	@Override

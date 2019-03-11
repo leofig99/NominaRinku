@@ -5,8 +5,11 @@ import java.awt.EventQueue;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import principal.MainApp;
 
@@ -47,9 +50,13 @@ public class VentanaEmpleados extends JDialog {
 		PanelModificar panelModificar = new PanelModificar();
 		tabsEmp.addTab("Modificar", null, panelModificar, null);
 		
-		PanelEliminar panelEliminar= new PanelEliminar();
-		tabsEmp.addTab("Eliminar", null, panelEliminar, null);
-		
+		tabsEmp.addChangeListener(new ChangeListener() {
+	        public void stateChanged(ChangeEvent e) {
+	        		PanelBuscar buscar = new PanelBuscar();
+	        		buscar.llenarLista();
+	        	}
+	    });
+	    
 		setModal(true);
 		
 	}

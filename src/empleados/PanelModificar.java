@@ -5,6 +5,8 @@ import javax.swing.JRadioButton;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -43,6 +45,15 @@ public class PanelModificar extends JPanel implements ActionListener {
 		
 		txtEmp = new JTextField();
 		txtEmp.setBounds(188, 30, 86, 20);
+		txtEmp.addKeyListener(new KeyAdapter() {
+	        @Override
+	        public void keyTyped(KeyEvent e) {
+	            char c = e.getKeyChar();
+	            if (!Character.isDigit(c)||txtEmp.getText().length()==8){
+	                e.consume();
+	            }
+	        }
+	    });
 		add(txtEmp);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
@@ -52,6 +63,15 @@ public class PanelModificar extends JPanel implements ActionListener {
 		txtNombre = new JTextField(20);
 		txtNombre.setEnabled(false);
 		txtNombre.setBounds(84, 79, 86, 20);
+		txtNombre.addKeyListener(new KeyAdapter() {
+	        @Override
+	        public void keyTyped(KeyEvent e) {
+	            char c = e.getKeyChar();
+	            if (Character.isDigit(c)||txtNombre.getText().length()==18) {
+	                e.consume();
+	            }
+	        }
+	    });
 		add(txtNombre);
 		txtNombre.setColumns(10);
 		
@@ -59,9 +79,18 @@ public class PanelModificar extends JPanel implements ActionListener {
 		lblApellido.setBounds(209, 82, 65, 14);
 		add(lblApellido);
 		
-		txtApellido = new JTextField(20);
+		txtApellido = new JTextField();
 		txtApellido.setEnabled(false);
 		txtApellido.setBounds(284, 79, 86, 20);
+		txtApellido.addKeyListener(new KeyAdapter() {
+	        @Override
+	        public void keyTyped(KeyEvent e) {
+	            char c = e.getKeyChar();
+	            if (Character.isDigit(c)||txtApellido.getText().length()==18) {
+	                e.consume();
+	            }
+	        }
+	    });
 		add(txtApellido);
 		
 		JPanel panelRol = new JPanel();
@@ -132,13 +161,19 @@ public class PanelModificar extends JPanel implements ActionListener {
 	}
 
 	
-	
+	public void limpiarCampos() {
+	    txtNombre.setText("");	    
+	    txtApellido.setText("");
+	    rbChofer.setSelected(true);
+	    rbInterno.setSelected(true);
+	    btnGuardar.setEnabled(false);
+	}
 	
 	public void cargarDatos() {
 
 		   Statement statement;
 		    
-			
+			limpiarCampos();
 				try {
 					statement = con.getConnection().createStatement();
 				    ResultSet rs = statement.executeQuery("SELECT * FROM empleadosrinku WHERE numemp="+txtEmp.getText()); 
@@ -186,7 +221,7 @@ public class PanelModificar extends JPanel implements ActionListener {
 				    }
 				    
 				} catch (SQLException e) {
-					e.printStackTrace();
+			    	JOptionPane.showMessageDialog(null,"No se encontro el empleado.", "ERROR",JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -223,7 +258,11 @@ public class PanelModificar extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==btnConsultar) {
-			cargarDatos();
+			if(!txtEmp.getText().isEmpty()) {
+				cargarDatos();
+				}else {
+			    	JOptionPane.showMessageDialog(null,"Favor de ingresar No. de empleado.", "Buscar",JOptionPane.INFORMATION_MESSAGE);
+				}
 		}
 	}
 
