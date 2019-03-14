@@ -11,6 +11,7 @@ import empleados.VentanaEmpleados;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import movimientos.VentanaMovimientos;
+import reportes.Reportes;
 
 public class MainApp extends JFrame implements ActionListener{
 
@@ -63,7 +64,8 @@ public class MainApp extends JFrame implements ActionListener{
 		}
 		
 		if(e.getSource()==btnReportes){
-		
+			Reportes reportes = new Reportes();
+			reportes.setVisible(true);
 		}
 	}
 }

@@ -27,8 +27,9 @@ public class PanelNuevo extends JPanel implements ActionListener {
 	private Conexion con = new Conexion();
 	private String sTipo,sRol;
 	private JRadioButton rbChofer,rbCargador,rbAuxiliar,rbInterno,rbExterno;
-	private JLabel lblNumero,lblNombre,lblApellido;
+	private JLabel lblNumero,lblApellido;
 	public PanelNuevo() {
+		setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		setLayout(null);
 		
 		lblNumero = new JLabel("N\u00FAmero:");
@@ -47,6 +48,7 @@ public class PanelNuevo extends JPanel implements ActionListener {
 	            }
 	        }
 	    });
+		
 		add(txtNumero);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
@@ -140,6 +142,7 @@ public class PanelNuevo extends JPanel implements ActionListener {
 
 public void NuevoEmpleado() {
 	Statement statement;
+	
 	if(txtNumero.getText().isEmpty()||txtNombre.getText().isEmpty()) {
 		JOptionPane.showMessageDialog(null,"Favor de llenar todos los campos.", "ERROR",JOptionPane.INFORMATION_MESSAGE);
 	}else {
@@ -156,9 +159,10 @@ public void NuevoEmpleado() {
 	}else {
 		sTipo="Externo";
 	}
+	
 	try {
 		statement = con.getConnection().createStatement();
-		String sql="INSERT INTO empleadosrinku VALUES ("+txtNumero.getText().trim()+",'"+txtNombre.getText().trim()+"','"+txtApellido.getText().trim()+"','"+sRol+"','"+sTipo+"')";
+		String sql="INSERT INTO empleadosrinku VALUES ("+txtNumero.getText().trim()+",'"+txtNombre.getText().trim()+"','"+txtApellido.getText().trim()+"','"+sRol.trim()+"','"+sTipo.trim()+"')";
 		statement.executeUpdate(sql);
 		JOptionPane.showMessageDialog(null,"Empleado guardado correctamente!.", "Exito",JOptionPane.INFORMATION_MESSAGE);
 
@@ -171,10 +175,19 @@ public void NuevoEmpleado() {
 }
 }
 
+public void limpiarDatos() {
+	txtNumero.setText("");
+	txtNombre.setText("");
+	txtApellido.setText("");
+	rbChofer.setSelected(true);
+	rbInterno.setSelected(true);
+}
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource()==btnGuardar){
 				NuevoEmpleado();
+				limpiarDatos();
 		}
 	}
+	
 }

@@ -52,7 +52,17 @@ public class PanelModificar extends JPanel implements ActionListener {
 	            if (!Character.isDigit(c)||txtEmp.getText().length()==8){
 	                e.consume();
 	            }
+	        
+	            if(e.getKeyChar()==KeyEvent.VK_ENTER) {
+	            	if(!txtEmp.getText().isEmpty()) {
+	            		cargarDatos();
+	            		}else {
+	    			    	JOptionPane.showMessageDialog(null,"Favor de ingresar No. de empleado.", "Buscar",JOptionPane.INFORMATION_MESSAGE);
+	    				}
+	            }
 	        }
+	            
+	        
 	    });
 		add(txtEmp);
 		
@@ -161,19 +171,26 @@ public class PanelModificar extends JPanel implements ActionListener {
 	}
 
 	
-	public void limpiarCampos() {
-	    txtNombre.setText("");	    
+	public void limpiarCampos()
+	{
+		txtEmp.setText("");
+	    txtNombre.setText("");
 	    txtApellido.setText("");
 	    rbChofer.setSelected(true);
 	    rbInterno.setSelected(true);
 	    btnGuardar.setEnabled(false);
+	    rbChofer.setEnabled(false);
+	    rbCargador.setEnabled(false);
+	    rbAuxiliar.setEnabled(false);
+	    rbInterno.setEnabled(false);
+	    rbExterno.setEnabled(false);
 	}
 	
 	public void cargarDatos() {
 
 		   Statement statement;
 		    
-			limpiarCampos();
+			//limpiarCampos();
 				try {
 					statement = con.getConnection().createStatement();
 				    ResultSet rs = statement.executeQuery("SELECT * FROM empleadosrinku WHERE numemp="+txtEmp.getText()); 
@@ -222,6 +239,7 @@ public class PanelModificar extends JPanel implements ActionListener {
 				    
 				} catch (SQLException e) {
 			    	JOptionPane.showMessageDialog(null,"No se encontro el empleado.", "ERROR",JOptionPane.INFORMATION_MESSAGE);
+			    	limpiarCampos();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -246,13 +264,12 @@ public class PanelModificar extends JPanel implements ActionListener {
 			statement = con.getConnection().createStatement();
 			String sql="UPDATE empleadosrinku set nombre='"+txtNombre.getText()+"', apellido='"+txtApellido.getText()+"', rol='"+sRol+"', tipo='"+sTipo+"' WHERE numemp="+txtEmp.getText();
 			statement.executeUpdate(sql); 
-			//JOptionPane.showMessageDialog(null, sql);
+			JOptionPane.showMessageDialog(null, "Empleado Modificado Correctamente");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	  
+		} 
 	}
 	
 	@Override
@@ -264,6 +281,9 @@ public class PanelModificar extends JPanel implements ActionListener {
 			    	JOptionPane.showMessageDialog(null,"Favor de ingresar No. de empleado.", "Buscar",JOptionPane.INFORMATION_MESSAGE);
 				}
 		}
+		if(e.getSource()==btnGuardar) {
+			modificarEmp();
+			limpiarCampos();
+		}
 	}
-
 }

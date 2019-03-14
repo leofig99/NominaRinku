@@ -30,12 +30,6 @@ public class VentanaMovimientos extends JDialog {
 		PanelBuscar panelBuscar = new PanelBuscar();
 		tabsMov.addTab("Buscar", null, panelBuscar, null);
 		
-		PanelModificar panelModificar = new PanelModificar();
-		tabsMov.addTab("Modificar", null, panelModificar, null);
-		
-		PanelEliminar panelEliminar= new PanelEliminar();
-		tabsMov.addTab("Eliminar", null, panelEliminar, null);
-		
 		setModal(true);
 	}
 

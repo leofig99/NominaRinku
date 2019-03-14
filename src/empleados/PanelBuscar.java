@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import bdsql.Conexion;
+import principal.ConfigDlg;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -48,6 +50,18 @@ public class PanelBuscar extends JPanel implements ActionListener {
 	            char c = e.getKeyChar();
 	            if (!Character.isDigit(c)||txtEmp.getText().length()==8) {
 	                e.consume();
+	            }
+	            
+				if(txtEmp.getText().isEmpty()) {
+					llenarLista();
+	            }
+				
+			    if(e.getKeyChar()==KeyEvent.VK_ENTER) {
+	            	if(!txtEmp.getText().isEmpty()) {
+	            		buscarEmpleado();
+	            		}else {
+	    			    	JOptionPane.showMessageDialog(null,"Favor de ingresar No. de empleado.", "Buscar",JOptionPane.INFORMATION_MESSAGE);
+	    				}
 	            }
 	        }
 	    });
@@ -106,7 +120,8 @@ public class PanelBuscar extends JPanel implements ActionListener {
 		    rs.close();
 		    statement.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			ConfigDlg config = new ConfigDlg();
+			config.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -117,7 +132,7 @@ public class PanelBuscar extends JPanel implements ActionListener {
 		sNumEmp=tbBusqueda.getValueAt(tbBusqueda.getSelectedRow(), 0).toString();
 		try {
 			statement = con.getConnection().createStatement();
-			String sql="UPDATE empleadosrinku SET status=0 WHERE numemp ="+sNumEmp;
+			String sql="DELETE FROM empleadosrinku WHERE numemp ="+sNumEmp;
 			statement.executeUpdate(sql);
 			JOptionPane.showMessageDialog(null,"Baja exitosa!", "Baja",JOptionPane.INFORMATION_MESSAGE);
 
@@ -156,12 +171,12 @@ public class PanelBuscar extends JPanel implements ActionListener {
 		    
 		    rs.close();
 		    statement.close();
+		    
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	
@@ -176,9 +191,10 @@ public class PanelBuscar extends JPanel implements ActionListener {
 		}
 		if(e.getSource()==btnBaja) {
 			int dialogButton = JOptionPane.YES_NO_OPTION;
-			int dialogResult = JOptionPane.showConfirmDialog (null, "dWould You Like to Save your Previous Note First?","Warning",dialogButton);
+			int dialogResult = JOptionPane.showConfirmDialog (null, "Seguro que desea eliminar el registro?","Advertencia",dialogButton);
 			if(dialogResult == JOptionPane.YES_OPTION){
 				darBaja();
+				llenarLista();
 			}
 			
 			llenarLista();
