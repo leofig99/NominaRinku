@@ -2,7 +2,8 @@ package movimientos;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JTabbedPane;
 
 public class VentanaMovimientos extends JDialog {
@@ -29,7 +30,14 @@ public class VentanaMovimientos extends JDialog {
 		
 		PanelBuscar panelBuscar = new PanelBuscar();
 		tabsMov.addTab("Buscar", null, panelBuscar, null);
-		
+		tabsMov.addChangeListener(new ChangeListener() {
+		        public void stateChanged(ChangeEvent e) {
+		            if(tabsMov.getSelectedIndex()==1)
+		            {
+		            	panelBuscar.llenarLista();
+		            }
+		        }
+		    });
 		setModal(true);
 	}
 

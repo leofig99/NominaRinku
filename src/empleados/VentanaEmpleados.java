@@ -50,12 +50,14 @@ public class VentanaEmpleados extends JDialog {
 		PanelModificar panelModificar = new PanelModificar();
 		tabsEmp.addTab("Modificar", null, panelModificar, null);
 		
-		/*tabsEmp.addChangeListener(new ChangeListener() {
+		tabsEmp.addChangeListener(new ChangeListener() {
 	        public void stateChanged(ChangeEvent e) {
-	        		PanelBuscar buscar = new PanelBuscar();
-	        		buscar.llenarLista();
-	        	}
-	    });*/
+	            if(tabsEmp.getSelectedIndex()==1)
+	            {
+	            	panelBuscar.llenarLista();
+	            }
+	        }
+	    });
 	    
 		setModal(true);
 		

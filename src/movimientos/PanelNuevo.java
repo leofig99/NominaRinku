@@ -166,6 +166,8 @@ public class PanelNuevo extends JPanel implements ActionListener {
 
 		});
 		add(cbTurno);
+		
+		//JOptionPane.showMessageDialog(null, "busqueda");
 	}
 	
 	private void consultarEmpleado(){
@@ -208,36 +210,40 @@ public class PanelNuevo extends JPanel implements ActionListener {
 	}
 	
 	public void NuevoMovto() {
+		if(!(validarFechaMovto()>0)) {
+			
+			Statement statement;
+			String sql;
 		
-		Statement statement;
-		String sql;
-		if(!chTurno.isSelected()){
-			iTurno=0;
-		}else{
-			if(cbTurno.getSelectedItem().toString()=="Chofer") {
-				iTurno=1;
-			}else {
-				iTurno=2;
+			if(!chTurno.isSelected()){
+				iTurno=0;
+			}else{
+				if(cbTurno.getSelectedItem().toString()=="Chofer") {
+					iTurno=1;
+				}else {
+					iTurno=2;
+				}
 			}
-		}
-		
-		sFecha=fechaformato.format(pickFecha.getDate());
-		
-		JOptionPane.showMessageDialog(null, pickFecha.getDate());
-		JOptionPane.showMessageDialog(null, sFecha);
-		
-		try {
-			statement = con.getConnection().createStatement();
-			sql="INSERT INTO movimientosrinku VALUES ("+txtnoemp.getText().trim()+",'"+txtNombre.getText().trim()+"','"+cbRol.getSelectedItem().toString()+"','"+cbTipo.getSelectedItem().toString()+"',TO_DATE('"+sFecha+"','DD/MM/YY'),"+(Integer)spinEntregas.getValue()+","+iTurno+")";
-			//JOptionPane.showMessageDialog(null, sql);
-			statement.executeUpdate(sql);
-			JOptionPane.showMessageDialog(null,"Movimiento guardado correctamente!", "Exito",JOptionPane.INFORMATION_MESSAGE);									//TO_DATE('13/03/2019','DD/MM/YYYY')
+			
+			sFecha=fechaformato.format(pickFecha.getDate());
+			
+			try {
+				statement = con.getConnection().createStatement();
+				
+				sql="INSERT INTO movimientosrinku VALUES ("+txtnoemp.getText().trim()+",'"+txtNombre.getText().trim()+"','"+cbRol.getSelectedItem().toString()+"','"+cbTipo.getSelectedItem().toString()+"',TO_DATE('"+sFecha+"','DD/MM/YY'),"+(Integer)spinEntregas.getValue()+","+iTurno+")";
+				statement.executeUpdate(sql);
+				
+				JOptionPane.showMessageDialog(null,"Movimiento guardado correctamente!", "Exito",JOptionPane.INFORMATION_MESSAGE);									//TO_DATE('13/03/2019','DD/MM/YYYY')
 
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Hubo un error al guardar el movimiento.", "ERROR",JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null,"Hubo un error al guardar el movimiento.", "ERROR",JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}else {
+			JOptionPane.showMessageDialog(null, "Ya existe un movimiento con ese día.","Advertencia",JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
@@ -251,6 +257,24 @@ public class PanelNuevo extends JPanel implements ActionListener {
 		cbTurno.setEnabled(false);
 	}
 
+	public int validarFechaMovto() {
+		int resultado=0;
+		sFecha=fechaformato.format(pickFecha.getDate());
+		try {
+			statement = con.getConnection().createStatement();
+			sql = "SELECT COUNT(*) FROM movimientosrinku WHERE numemp=123456 AND fecha=TO_DATE('"+sFecha+"','DD/MM/YY')";
+		    ResultSet rs = statement.executeQuery(sql); 
+		    rs.next();
+		    resultado=Integer.parseInt(rs.getObject(1).toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return resultado;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==btnGuardar) {
