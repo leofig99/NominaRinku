@@ -13,6 +13,7 @@ public class VentanaMovimientos extends JDialog {
 	 * Create the frame.
 	 */
 	public VentanaMovimientos() {
+		setTitle("Movimientos Rinku");
 		setBounds(100, 100, 500, 350);
 		setResizable(false);
 		panelPrincipal = new JPanel();

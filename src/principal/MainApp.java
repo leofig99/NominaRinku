@@ -5,9 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import empleados.VentanaEmpleados;
-
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import movimientos.VentanaMovimientos;
@@ -15,21 +13,18 @@ import reportes.Reportes;
 
 public class MainApp extends JFrame implements ActionListener{
 
+	private static final long serialVersionUID = 1L;
 	private JPanel panelPrincipal;
 	JButton btnEmpleados,btnMovimientos, btnReportes;
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		MainApp frame = new MainApp();
 		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public MainApp() {
+		setTitle("Rinku");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 250, 250);
 		panelPrincipal = new JPanel();

@@ -166,8 +166,6 @@ public class PanelNuevo extends JPanel implements ActionListener {
 
 		});
 		add(cbTurno);
-		
-		//JOptionPane.showMessageDialog(null, "busqueda");
 	}
 	
 	private void consultarEmpleado(){
@@ -233,7 +231,7 @@ public class PanelNuevo extends JPanel implements ActionListener {
 				sql="INSERT INTO movimientosrinku VALUES ("+txtnoemp.getText().trim()+",'"+txtNombre.getText().trim()+"','"+cbRol.getSelectedItem().toString()+"','"+cbTipo.getSelectedItem().toString()+"',TO_DATE('"+sFecha+"','DD/MM/YY'),"+(Integer)spinEntregas.getValue()+","+iTurno+")";
 				statement.executeUpdate(sql);
 				
-				JOptionPane.showMessageDialog(null,"Movimiento guardado correctamente!", "Exito",JOptionPane.INFORMATION_MESSAGE);									//TO_DATE('13/03/2019','DD/MM/YYYY')
+				JOptionPane.showMessageDialog(null,"Movimiento guardado correctamente!", "Exito",JOptionPane.INFORMATION_MESSAGE);
 
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null,"Hubo un error al guardar el movimiento.", "ERROR",JOptionPane.ERROR_MESSAGE);
@@ -286,5 +284,4 @@ public class PanelNuevo extends JPanel implements ActionListener {
 			}
 		}
 	}
-
 }

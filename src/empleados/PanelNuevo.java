@@ -10,7 +10,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -20,6 +19,7 @@ import javax.swing.border.BevelBorder;
 import bdsql.Conexion;
 
 public class PanelNuevo extends JPanel implements ActionListener {
+	private static final long serialVersionUID = 1L;
 	private JTextField txtNumero;
 	private JTextField txtNombre;
 	private JTextField txtApellido;

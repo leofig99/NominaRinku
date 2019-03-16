@@ -1,11 +1,8 @@
 package empleados;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.GridLayout;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
@@ -14,21 +11,13 @@ import javax.swing.event.ChangeListener;
 import principal.MainApp;
 
 import javax.swing.JTabbedPane;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.WindowConstants;
 
 public class VentanaEmpleados extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel panelPrincipal;
-
-	/**
-	 * Create the frame.
-	 */
 	public VentanaEmpleados() {
+		setTitle("Empleados Rinku");
 		
 		setBounds(100, 100, 500, 350);
 		panelPrincipal = new JPanel();

@@ -16,7 +16,7 @@ public class Conexion {
 	  public Connection getConnection() throws Exception {
 
 			try {
-				reader = new BufferedReader(new FileReader("C:/sys/mem/configrinku.txt"));
+				reader = new BufferedReader(new FileReader("C:/sys/mem/NominaRinku/configrinku.txt"));
 				String line = reader.readLine();
 				sIP = line;
 				sDatabase = reader.readLine();
@@ -34,9 +34,5 @@ public class Conexion {
 		    Class.forName("org.postgresql.Driver"); 
             //return c = DriverManager.getConnection(urlDatabase,  "systienda0004", "b826746ce6270d23b098dc91145208f7");
 		    return c = DriverManager.getConnection(urlDatabase,  sUsuario, sPass);
-	  }
-	  
-	  public void initConexion() {
-		  
 	  }
 }

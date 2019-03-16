@@ -8,10 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,7 +22,8 @@ import bdsql.Conexion;
 import javax.swing.border.BevelBorder;
 
 public class PanelModificar extends JPanel implements ActionListener {
-	
+
+	private static final long serialVersionUID = 1L;
 	private JTextField txtEmp;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
@@ -189,8 +188,7 @@ public class PanelModificar extends JPanel implements ActionListener {
 	public void cargarDatos() {
 
 		   Statement statement;
-		    
-			//limpiarCampos();
+
 				try {
 					statement = con.getConnection().createStatement();
 				    ResultSet rs = statement.executeQuery("SELECT * FROM empleadosrinku WHERE numemp="+txtEmp.getText()); 
@@ -200,8 +198,6 @@ public class PanelModificar extends JPanel implements ActionListener {
 				    sApellido=rs.getObject(3).toString();
 				    sTipo=rs.getObject(5).toString().trim();
 				    sRol=rs.getObject(4).toString().trim();
-				    //JOptionPane.showMessageDialog(null, sNombre+" "+sApellido+" "+sRol+" "+sTipo);
-				    
 				    
 				    txtNombre.setText(sNombre);
 				    
@@ -247,6 +243,7 @@ public class PanelModificar extends JPanel implements ActionListener {
 	
 	public void modificarEmp() {
 		Statement statement;
+		
 		if(rbChofer.isSelected()) {
 			sRol="Chofer";
 		}else if(rbCargador.isSelected()) {

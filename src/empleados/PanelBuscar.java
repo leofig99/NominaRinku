@@ -14,7 +14,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import bdsql.Conexion;
 import principal.ConfigDlg;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -34,6 +33,7 @@ public class PanelBuscar extends JPanel implements ActionListener {
 	public Conexion con = new Conexion();
 	private JButton btnBaja;
 	public String[] tbColumnas = {"No. Empleado","Nombre","Apellido","Rol","Tipo","Status"};
+	
 	public PanelBuscar() {
 		setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		setLayout(null);
@@ -109,12 +109,12 @@ public class PanelBuscar extends JPanel implements ActionListener {
 		    while (rs.next())
 		    {
 		    	int numeroColumnas = metaDatos.getColumnCount();
-		    	Object[] etiquetas = new Object[numeroColumnas];
+		    	Object[] rows = new Object[numeroColumnas];
 		    	for (int i = 0; i < numeroColumnas; i++)
 		    	{
-		    	   etiquetas[i] = rs.getObject(i+1);
+		    	   rows[i] = rs.getObject(i+1);
 		    	}
-		        model.addRow(etiquetas);
+		        model.addRow(rows);
 		    }
 		    tbBusqueda.setModel(model);
 		    rs.close();
@@ -155,12 +155,12 @@ public class PanelBuscar extends JPanel implements ActionListener {
 		    while (rs.next())
 		    {
 		    	int numeroColumnas = metaDatos.getColumnCount();
-		    	Object[] etiquetas = new Object[numeroColumnas];
+		    	Object[] rows = new Object[numeroColumnas];
 		    	for (int i = 0; i < numeroColumnas; i++)
 		    	{
-		    	   etiquetas[i] = rs.getObject(i+1);
+		    	   rows[i] = rs.getObject(i+1);
 		    	}
-		        model.addRow(etiquetas);
+		        model.addRow(rows);
 		    }
 		    tbBusqueda.setModel(model);
 		    

@@ -1,23 +1,15 @@
 package principal;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.SQLException;
-
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import bdsql.Conexion;
-
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -28,8 +20,9 @@ public class ConfigDlg extends JDialog implements ActionListener{
 	private JTextField txtUsuario;
 	private JTextField txtPass;
 	private JButton btnGuardar;
-	private Conexion con = new Conexion();
+	
 	public ConfigDlg() {
+		setTitle("Configuraci\u00F3n");
 		setBounds(100, 100, 277, 217);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,20 +77,24 @@ public class ConfigDlg extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==btnGuardar) {
-			
+
+		    File directorio = new File("C:/sys/mem/NominaRinku");
+		    
+		    if (! directorio.exists()){
+		        directorio.mkdirs();
+		    }
+		    
 		    String fileContent = txtIP.getText()+"\n"+txtDatabase.getText()+"\n"+txtUsuario.getText()+"\n"+txtPass.getText();
 		    try {
 		    	
-		    	BufferedWriter writer = new BufferedWriter(new FileWriter("C:/sys/mem/configrinku.txt"));
+		    	BufferedWriter writer = new BufferedWriter(new FileWriter("C:/sys/mem/NominaRinku/configrinku.txt"));
 				writer.write(fileContent);
-				 writer.close();
+				writer.close();
 
 				dispose();
-			 
-				JOptionPane.showMessageDialog(null, "Se creó el archivo de configuración en la ruta\nC:/sys/mem/configrinku.txt");
-			
-		    }catch (IOException e1) {
 				
+		    }catch (IOException e1) {
+				e1.printStackTrace();
 			}
 		}
 	}
